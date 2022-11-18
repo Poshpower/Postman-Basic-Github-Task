@@ -54,42 +54,56 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"",
 									"const responseJson = pm.response.json();",
-									"console.log(responseJson)",
-									"pm.test(\"response should have Status string to be ok\", function () {",
+									"console.log(responseJson.apiVersion)",
+									"",
+									"pm.test(\"response should have Status string to be OK\", function () {",
 									"     pm.response.to.be.ok;",
 									"});",
-									"pm.test(\"response body should be a json body\", function () {",
-									"     pm.response.to.be.json;",
-									"});",
+									"",
 									"pm.test(\"response should have a body\", function () {",
 									"     pm.response.to.be.withBody;",
 									"});",
 									"",
-									"pm.test(\"response must have a body\", function () {",
-									"     pm.response.to.be.withBody;  ",
-									"});",
-									"",
 									"pm.test(\"response body must be a Json body\", function () {",
 									"     pm.response.to.be.json;",
-									"});"
+									"});",
+									"",
+									"pm.test(\"Check the active environment is TEAM POSTMAN\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"TEAM POSTMAN\");",
+									"});",
+									"",
+									"pm.test(\"The Respons body should contain objects apiVersion, title, scopes\", () => {",
+									"  const expectedObject = {",
+									" \"apiVersion\": \"6.3.8.0\",",
+									"    \"title\": \"Fusio\",",
+									"    \"scopes\": [",
+									"        \"default\"",
+									"    ],",
+									"};",
+									"  pm.expect(pm.response.json()).to.deep.include(expectedObject);",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									" console.log(jsonData.apiVersion)",
+									" console.log(jsonData.scopes)",
+									"",
+									"pm.test(\"Respons Body should contain string apiVersion with value 6.3.8.0\", function () {  ",
+									"    pm.expect(jsonData.apiVersion).to.eql(\"6.3.8.0\");",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string scopes with value [default]\", function () {  ",
+									"    pm.expect(jsonData.scopes).to.eql([\"default\"]);",
+									"});",
+									"",
+									"",
+									""
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accesstoken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
