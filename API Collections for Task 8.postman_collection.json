@@ -16,20 +16,37 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code should be 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"",
+									"// pm.test(\"Status code should be 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"// pm.test(\"Status code name should have string : OK\", function () {",
+									"//     pm.response.to.have.status(\"OK\");",
+									"// });",
+									"",
+									"pm.test(\"response should have a body\", function () {",
+									"     pm.response.to.be.withBody;  ",
 									"});",
-									"pm.test(\"Status code name has OK string\", function () {",
-									"    pm.response.to.have.status(\"OK\");",
+									"",
+									"pm.test(\"response body must be a Json body\", function () {",
+									"     pm.response.to.be.json;",
 									"});"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{baseurl}}/todo",
 							"host": [
@@ -55,7 +72,6 @@
 							"script": {
 								"exec": [
 									"const responseJson = pm.response.json();",
-									"console.log(responseJson.apiVersion)",
 									"",
 									"pm.test(\"response should have Status string to be OK\", function () {",
 									"     pm.response.to.be.ok;",
@@ -69,8 +85,8 @@
 									"     pm.response.to.be.json;",
 									"});",
 									"",
-									"pm.test(\"Check the active environment is TEAM POSTMAN\", () => {",
-									"  pm.expect(pm.environment.name).to.eql(\"TEAM POSTMAN\");",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
 									"});",
 									"",
 									"pm.test(\"The Respons body should contain objects apiVersion, title, scopes\", () => {",
@@ -88,11 +104,11 @@
 									" console.log(jsonData.apiVersion)",
 									" console.log(jsonData.scopes)",
 									"",
-									"pm.test(\"Respons Body should contain string apiVersion with value 6.3.8.0\", function () {  ",
+									"pm.test(\"Respons Body should contain string: apiVersion with value 6.3.8.0\", function () {  ",
 									"    pm.expect(jsonData.apiVersion).to.eql(\"6.3.8.0\");",
 									"});",
 									"",
-									"pm.test(\"Respons Body should contain string scopes with value [default]\", function () {  ",
+									"pm.test(\"Respons Body should contain string: scopes with value [default]\", function () {  ",
 									"    pm.expect(jsonData.scopes).to.eql([\"default\"]);",
 									"});",
 									"",
@@ -128,18 +144,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Body matches string  should contain success\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"success\");",
-									"});",
-									"",
-									" var jsonData = pm.response.json();",
-									"pm.test(\"The request should return success with value true\", function () {",
-									"    pm.expect(jsonData.success).to.eql(true);",
-									"});",
-									"",
-									"pm.test(\"Status code should be  200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
+									"// pm.test(\"Status code should be  200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
 									"",
 									"pm.test(\"response must have a body\", function () {",
 									"     pm.response.to.be.withBody;  ",
@@ -147,17 +154,45 @@
 									"",
 									"pm.test(\"response body must be a Json body\", function () {",
 									"     pm.response.to.be.json;",
-									"});"
+									"});",
+									"",
+									"pm.test(\"Response body should contain string success\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"",
+									"//  var jsonData = pm.response.json();",
+									"//  console.log(jsonData)",
+									"",
+									"// pm.test(\"The request should return success with value true\", function () {",
+									"//     pm.expect(jsonData.success).to.eql(true);",
+									"// });",
+									" ",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accesstoken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseurl}}/todo/?todo_id=2",
+							"raw": "{{baseurl}}/todo/",
 							"host": [
 								"{{baseurl}}"
 							],
@@ -168,62 +203,12 @@
 							"query": [
 								{
 									"key": "todo_id",
-									"value": "2"
+									"value": "{{entityid}}",
+									"disabled": true
 								}
 							]
 						},
 						"description": "https://demo.fusio-project.org/index.php/todo/:todo_id"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Register  an API Client",
-			"item": [
-				{
-					"name": "valid name email credentials Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"pm.test(\"Status code name has string Created\", function () {\r",
-									"    pm.response.to.have.status(\"Created\");\r",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n   \"clientName\": \"Princess\",\n   \"clientEmail\": \"princess4@mailinator.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://simple-books-api.glitch.me/api-clients/",
-							"protocol": "https",
-							"host": [
-								"simple-books-api",
-								"glitch",
-								"me"
-							],
-							"path": [
-								"api-clients",
-								""
-							]
-						}
 					},
 					"response": []
 				}
@@ -239,42 +224,50 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const responseJson = pm.response.json();\r",
+									"const books = pm.response.json();\r",
 									"\r",
+									"// Getting Status code\r",
 									"pm.test(\"Status code  should be 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"var book = pm.response.json()[3];\r",
-									" console.log(book.name);\r",
-									" pm.environment.set(\"bookName\",book.name);\r",
+									"// Extracting book name\r",
+									"var singleBook = pm.response.json()[5];\r",
+									" console.log(singleBook.name);\r",
+									" pm.environment.set(\"bookName\",singleBook.name);\r",
+									"pm.test(\"The Search should be for a book name called Viscount Who Loved Me\", function (){\r",
+									"    pm.expect(singleBook.name).to.eql(\"Viscount Who Loved Me\"); \r",
+									"});\r",
 									"\r",
+									"var singleBook = pm.response.json()[2];\r",
+									" console.log(singleBook.available);\r",
+									" pm.environment.set(\"bookName\",singleBook.available);\r",
+									"pm.test(\"The Search should be for if the book is available Half\", function (){\r",
+									"    pm.expect(singleBook.available).to.eql(true);\r",
+									"  \r",
+									"});\r",
 									"\r",
-									"// pm.test(\"The Search should be for a book name called The Midnight Library\", function (){\r",
-									"//     pm.expect(response[2].name).to.eql(\"The Midnight Library\");\r",
-									"//     pm.expect\r",
-									"// });\r",
+									"// Extracting Book id\r",
+									"var singleBook = pm.response.json()[1];\r",
+									" console.log(singleBook.id);\r",
+									" pm.environment.set(\"bookId\",singleBook.id);\r",
+									"pm.test(\"The Search should be for a book id 3\", function (){\r",
+									"    pm.expect(singleBook.id).to.eql(2);\r",
+									"  \r",
+									"});\r",
 									"\r",
-									"// console.log(response[3].id)\r",
+									"var singleBook = pm.response.json()[3];\r",
+									" console.log(singleBook.id);\r",
+									" pm.environment.set(\"bookId\",singleBook.id);\r",
+									"pm.test(\"The Search should be for a book id 6\", function (){\r",
+									"    pm.expect(singleBook.id).to.eql(6);\r",
+									"  \r",
+									"});\r",
 									"\r",
-									"// pm.environment.set(\"bookId\",response[3].id);\r",
-									"\r",
-									"// pm.test(\"The Search should be for a book id 6 with name Viscount Who Loved Me\", function (){\r",
-									"//     pm.expect(response[3].id).to.eql(6) &&  pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\");\r",
-									"//     pm.expect\r",
-									"// });\r",
-									"\r",
-									"// console.log(response[1].type)\r",
-									"// pm.environment.set(\"bookType\",response[3].type);\r",
-									"\r",
-									"// pm.test(\"The Search should be for a book type of fiction Loved Me\", function (){\r",
-									"//     pm.expect(response[1].type).to.eql(book);\r",
-									"//     pm.expect\r",
-									"// });\r",
-									"\r",
-									"// pm.test(\"Check the active environment is Team-Postman\", () => {\r",
-									"//   pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
-									"// });\r",
+									"// Verifying the enviroment used\r",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
+									"});\r",
 									"\r",
 									""
 								],
@@ -286,18 +279,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseurlsimplebook}}/books?type=fiction",
+							"raw": "{{baseurlsimplebooks}}/books",
 							"host": [
-								"{{baseurlsimplebook}}"
+								"{{baseurlsimplebooks}}"
 							],
 							"path": [
 								"books"
-							],
-							"query": [
-								{
-									"key": "type",
-									"value": "fiction"
-								}
 							]
 						}
 					},
@@ -368,7 +355,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bookId\": {{bookId}},\n  \"customerName\": \"Bimpe\"\n}",
+							"raw": "{\n  \"bookId\": {{bookId}},\n  \"customerName\": \"Kola\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,9 +363,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseurlsimplebook}}/orders",
+							"raw": "{{baseurlsimplebooks}}/orders",
 							"host": [
-								"{{baseurlsimplebook}}"
+								"{{baseurlsimplebooks}}"
 							],
 							"path": [
 								"orders"
@@ -399,7 +386,33 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Verifying the Status message",
+									"pm.test(\"Status code string has OK string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Status code should be 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"customerName\");",
+									"});",
+									"",
+									"var orders = response;",
+									"console.log(orders[2])",
+									"//Verifying the Keys in the response",
+									"pm.test(\"Confirm the response contains all expected keys\", function () {",
+									"    pm.expect(orders[2]).to.have.all.keys(\"id\",\"bookId\",\"customerName\",\"createdBy\",\"quantity\",\"timestamp\");",
+									"    pm.expect(response).to.not.have.any.keys(\"name\",\"type\");",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -414,7 +427,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{accesstoken}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -487,9 +500,12 @@
 									"// Verify that the order gotten is for the specified  order",
 									" var jsonData = pm.response.json();",
 									" console.log(jsonData);",
-									"pm.test(\"The request should return order with the specified id\", function () {",
-									"  //  pm.expect(jsonData.id).to.eql(pm.environment.orderId)",
-									"    pm.expect(jsonData.orderId).to.eql(OrderId);",
+									" console.log(jsonData.id);",
+									" var environmentOrderId = pm.environment.get(\"orderId\");",
+									" console.log(environmentOrderId)",
+									"",
+									"pm.test(\"Response property for orderId matches environment variable orderId\", function () {",
+									"  pm.expect(jsonData.id).to.eql(pm.environment.get(\"orderId\"));",
 									"});",
 									"",
 									"pm.test(\"Check the active environment is Team-Postman\", () => {",
@@ -527,7 +543,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customerName\": \"Gbenga\"\n}",
+							"raw": "{\n  \"customerName\": \"Bola\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -535,9 +551,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseurlsimplebook}}/orders/:orderId",
+							"raw": "{{baseurlsimplebooks}}/orders/:orderId",
 							"host": [
-								"{{baseurlsimplebook}}"
+								"{{baseurlsimplebooks}}"
 							],
 							"path": [
 								"orders",
@@ -565,13 +581,20 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 204\", function () {\r",
+									"\r",
+									"pm.test(\"Status code should be 204\", function () {\r",
 									"    pm.response.to.have.status(204);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Status code name has string OK\", function () {\r",
 									"    pm.response.to.have.status(\"No Content\");\r",
-									"});"
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"   "
 								],
 								"type": "text/javascript"
 							}
@@ -583,7 +606,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{accesstoken}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -611,8 +634,72 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": "{{orderIdToDelete}}"
+									"value": "{{orderId}}"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register  an API Client",
+			"item": [
+				{
+					"name": "valid name email credentials Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Verify the status code \r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Verify the status message \r",
+									"pm.test(\"Status code name has string Created\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"//Set the token to the enviroment\r",
+									"var token = response;\r",
+									"console.log(token);\r",
+									"pm.environment.set(\"accessToken\", token.accessToken);\r",
+									"\r",
+									"// Verifying the enviroment used\r",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"clientName\": \"Omolola\",\n   \"clientEmail\": \"Omolola47@mailinator.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebook}}/api-clients/",
+							"host": [
+								"{{baseurlsimplebook}}"
+							],
+							"path": [
+								"api-clients",
+								""
 							]
 						}
 					},
