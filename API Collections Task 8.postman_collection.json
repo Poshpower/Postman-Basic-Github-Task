@@ -1,0 +1,1222 @@
+{
+	"info": {
+		"_postman_id": "348c4457-1775-4a56-8ea2-02b3fd4ea2b7",
+		"name": "API Collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19407265"
+	},
+	"item": [
+		{
+			"name": "Get All Todo Entries",
+			"item": [
+				{
+					"name": "Get All Todo Entries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"// pm.test(\"Status code should be 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"// pm.test(\"Status code name should have string : OK\", function () {",
+									"//     pm.response.to.have.status(\"OK\");",
+									"// });",
+									"",
+									"pm.test(\"response should have a body\", function () {",
+									"     pm.response.to.be.withBody;  ",
+									"});",
+									"",
+									"pm.test(\"response body must be a Json body\", function () {",
+									"     pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseurl}}/todo",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Entries",
+			"item": [
+				{
+					"name": "Get All Entries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"",
+									"pm.test(\"response should have Status string to be OK\", function () {",
+									"     pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"response should have a body\", function () {",
+									"     pm.response.to.be.withBody;",
+									"});",
+									"",
+									"pm.test(\"response body must be a Json body\", function () {",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});",
+									"",
+									"pm.test(\"The Respons body should contain objects apiVersion, title, scopes\", () => {",
+									"  const expectedObject = {",
+									" \"apiVersion\": \"6.3.8.0\",",
+									"    \"title\": \"Fusio\",",
+									"    \"scopes\": [",
+									"        \"default\"",
+									"    ],",
+									"};",
+									"  pm.expect(pm.response.json()).to.deep.include(expectedObject);",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									" console.log(jsonData.apiVersion)",
+									" console.log(jsonData.scopes)",
+									"",
+									"pm.test(\"Respons Body should contain string: apiVersion with value 6.3.8.0\", function () {  ",
+									"    pm.expect(jsonData.apiVersion).to.eql(\"6.3.8.0\");",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string: scopes with value [default]\", function () {  ",
+									"    pm.expect(jsonData.scopes).to.eql([\"default\"]);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}",
+							"host": [
+								"{{baseurl}}"
+							]
+						},
+						"description": "https://demo.fusio-project.org/index.php/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Entry per ID",
+			"item": [
+				{
+					"name": "Get entry per ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Status code should be  200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"pm.test(\"response must have a body\", function () {",
+									"     pm.response.to.be.withBody;  ",
+									"});",
+									"",
+									"pm.test(\"response body must be a Json body\", function () {",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response body should contain string success\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"",
+									"//  var jsonData = pm.response.json();",
+									"//  console.log(jsonData)",
+									"",
+									"// pm.test(\"The request should return success with value true\", function () {",
+									"//     pm.expect(jsonData.success).to.eql(true);",
+									"// });",
+									" ",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accesstoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/todo/",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"todo",
+								""
+							],
+							"query": [
+								{
+									"key": "todo_id",
+									"value": "{{entityid}}",
+									"disabled": true
+								}
+							]
+						},
+						"description": "https://demo.fusio-project.org/index.php/todo/:todo_id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Books",
+			"item": [
+				{
+					"name": "Get All Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const books = pm.response.json();\r",
+									"\r",
+									"// Getting Status code\r",
+									"pm.test(\"Status code  should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Extracting book name\r",
+									"var singleBook = pm.response.json()[5];\r",
+									" console.log(singleBook.name);\r",
+									" pm.environment.set(\"bookName\",singleBook.name);\r",
+									"pm.test(\"The Search should be for a book name called Viscount Who Loved Me\", function (){\r",
+									"    pm.expect(singleBook.name).to.eql(\"Viscount Who Loved Me\"); \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[2];\r",
+									" console.log(singleBook.available);\r",
+									"//  pm.environment.set(\"bookStatus\",singleBook.available);\r",
+									"pm.test(\"The Search should be if the book is available\", function (){\r",
+									"    pm.expect(singleBook.available).to.eql(true); \r",
+									"});\r",
+									"\r",
+									"// Extracting Book id\r",
+									"var singleBook = pm.response.json()[2];\r",
+									" console.log(singleBook.id);\r",
+									" pm.environment.set(\"bookId\",singleBook.id);\r",
+									"pm.test(\"The Search should be for a book  with id 3\", function (){\r",
+									"    pm.expect(singleBook.id).to.eql(3);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[3];\r",
+									" console.log(singleBook.type);\r",
+									" pm.environment.set(\"bookFiction\",singleBook.type);\r",
+									"pm.test(\"The Search should be for a book of type fiction\", function (){\r",
+									"    pm.expect(singleBook.type).to.eql(\"fiction\");\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[4];\r",
+									" console.log(singleBook.type);\r",
+									" pm.environment.set(\"bookNon-fiction\",singleBook.type);\r",
+									"pm.test(\"The Search should be for a book of type non-fiction\", function (){\r",
+									"    pm.expect(singleBook.type).to.eql(\"non-fiction\");\r",
+									"  \r",
+									"});\r",
+									"// Verifying the enviroment used\r",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/books",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Type Fiction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const books = pm.response.json();\r",
+									"\r",
+									"// Getting Status code\r",
+									"pm.test(\"Status code  should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Extracting book name\r",
+									"var singleBook = pm.response.json()[3];\r",
+									" console.log(singleBook.name);\r",
+									" pm.environment.set(\"FictionbookName\",singleBook.name);\r",
+									"pm.test(\"The Search should be for a book name called Viscount Who Loved Me\", function (){\r",
+									"    pm.expect(singleBook.name).to.eql(\"Viscount Who Loved Me\"); \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[2];\r",
+									" console.log(singleBook.available);\r",
+									"//  pm.environment.set(\"bookStatus\",singleBook.available);\r",
+									"pm.test(\"The Search should be if the book is available\", function (){\r",
+									"    pm.expect(singleBook.available).to.eql(true);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"// Extracting Book id\r",
+									"var singleBook = pm.response.json()[2];\r",
+									" console.log(singleBook.id);\r",
+									" pm.environment.set(\"fictionbookId\",singleBook.id);\r",
+									"pm.test(\"The Search should be for a book  with id 3\", function (){\r",
+									"    pm.expect(singleBook.id).to.eql(4);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[3];\r",
+									" console.log(singleBook.type);\r",
+									"pm.test(\"The Search should be for a book of type fiction\", function (){\r",
+									"    pm.expect(singleBook.type).to.eql(\"fiction\");\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"// Verifying the enviroment used\r",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/books?type={{bookFiction}}",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "{{bookFiction}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Type non-Fiction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const books = pm.response.json();\r",
+									"\r",
+									"// Getting Status code\r",
+									"pm.test(\"Status code  should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Extracting book name\r",
+									"var singleBook = pm.response.json()[0];\r",
+									" console.log(singleBook.name);\r",
+									" pm.environment.set(\"nonFictionBookName\",singleBook.name);\r",
+									"pm.test(\"The Search should be for a nonFictionBook name called Just as I Am\", function (){\r",
+									"    pm.expect(singleBook.name).to.eql(\"Just as I Am\"); \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[1];\r",
+									" console.log(singleBook.available);\r",
+									"pm.test(\"The Search should be if the nonFictionBook is available\", function (){\r",
+									"    pm.expect(singleBook.available).to.eql(true);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"// Extracting Book id\r",
+									"var singleBook = pm.response.json()[1];\r",
+									" console.log(singleBook.id);\r",
+									" pm.environment.set(\"nonFictionbookId\",singleBook.id);\r",
+									"pm.test(\"The Search should be for a book  with id 3\", function (){\r",
+									"    pm.expect(singleBook.id).to.eql(5);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"var singleBook = pm.response.json()[1];\r",
+									" console.log(singleBook.type);\r",
+									" pm.environment.set(\"bookType\",singleBook.type);\r",
+									"pm.test(\"The Search should be for a nonFictionBook of type fiction\", function (){\r",
+									"    pm.expect(singleBook.type).to.eql(\"non-fiction\");\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"// Verifying the enviroment used\r",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/books?type={{bookNon-fiction}}",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "{{bookNon-fiction}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Place a Book Order",
+			"item": [
+				{
+					"name": "with valid parameters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Getting the body response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"//setting the  variable as a global variable\r",
+									"var responseData = response\r",
+									"console.log(responseData.orderId);\r",
+									"console.log(responseData.created);\r",
+									"pm.environment.set(\"orderId\", responseData.orderId);\r",
+									"\r",
+									"\r",
+									"// Verifying the request status code\r",
+									"pm.test(\"Status code should be 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//Verifying the status has message\r",
+									"pm.test(\"Status Message should have the String: Created\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"//Verifying the Keys in the response\r",
+									"pm.test(\"Confirm the order contains all expected keys\", function () {\r",
+									"    pm.expect(responseData).to.have.all.keys(\"created\",\"orderId\");\r",
+									"    pm.expect(responseData).to.not.have.any.keys(\"name\",\"type\");\r",
+									"});\r",
+									" \r",
+									" pm.test(\"Respons Body should contain string:created and set to true\", function () {  \r",
+									"    pm.expect(responseData.created).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body must be a Json body\", function () {\r",
+									"     pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": {{bookId}},\n  \"customerName\": \"Lara\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/orders",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "valid  book_id and no Client_ name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Getting the body response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"//setting the  variable as a global variable\r",
+									"var responseData = response\r",
+									"console.log(responseData.orderId);\r",
+									"console.log(responseData.created);\r",
+									"// pm.environment.set(\"orderId\", responseData.orderId);\r",
+									"\r",
+									"\r",
+									"// Verifying the request status code\r",
+									"pm.test(\"Status code should be 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//Verifying the status has message\r",
+									"pm.test(\"Status Message should have the String: Created\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"//Verifying the Keys in the response\r",
+									"pm.test(\"Confirm the order contains all expected keys\", function () {\r",
+									"    pm.expect(responseData).to.have.all.keys(\"created\",\"orderId\");\r",
+									"    pm.expect(responseData).to.not.have.any.keys(\"name\",\"type\");\r",
+									"});\r",
+									" \r",
+									" pm.test(\"Respons Body should contain string:created and set to true\", function () {  \r",
+									"    pm.expect(responseData.created).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body must be a Json body\", function () {\r",
+									"     pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": {{bookId}}  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "with an invalid  book_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Getting the body response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Verifying the request status code\r",
+									"pm.test(\"Status code should be 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//Verifying the status has message\r",
+									"pm.test(\"Status Message should have the String: Bad Request\", function () {\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
+									"});\r",
+									"\r",
+									"//Verifying the string in the response\r",
+									"pm.test(\"Response body should have string: error\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"});\r",
+									" \r",
+									"pm.test(\"response body must be a Json body\", function () {\r",
+									"     pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": {{invalidId}},\n  \"customerName\": \"John\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Orders",
+			"item": [
+				{
+					"name": "with valid accessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Verifying the Status message",
+									"pm.test(\"Status code string has OK string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Status code should be 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"customerName\");",
+									"});",
+									"",
+									"var orders = response;",
+									"console.log(orders[2])",
+									"//Verifying the Keys in the response",
+									"pm.test(\"Confirm the response contains all expected keys\", function () {",
+									"    pm.expect(orders[2]).to.have.all.keys(\"id\",\"bookId\",\"customerName\",\"createdBy\",\"quantity\",\"timestamp\");",
+									"    pm.expect(response).to.not.have.any.keys(\"name\",\"type\");",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/orders",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "with invalid accessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Verifying the Status message",
+									"pm.test(\"Status code string has string: Unauthorized \", function () {",
+									"    pm.response.to.have.status(\"Unauthorized\");",
+									"});",
+									"",
+									"pm.test(\"Status code should be 401\", () => {",
+									"  pm.expect(pm.response.code).to.eql(401);",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"error\");",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									"pm.test(\"The response should contain an error message\", function () {",
+									"    pm.expect(jsonData.error).to.eql(\"Invalid bearer token.\");",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "with missing accessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Verifying the Status message",
+									"pm.test(\"Status code string has string: Unauthorized \", function () {",
+									"    pm.response.to.have.status(\"Unauthorized\");",
+									"});",
+									"",
+									"pm.test(\"Status code should be 401\", () => {",
+									"  pm.expect(pm.response.code).to.eql(401);",
+									"});",
+									"",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"error\");",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									"pm.test(\"The response should contain an error message\", function () {",
+									"    pm.expect(jsonData.error).to.eql(\"Missing Authorization header.\");",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get An Order",
+			"item": [
+				{
+					"name": "with valid order ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"// Verify the status code message",
+									"pm.test(\"Status code name has OK string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"// Verify the status code",
+									"pm.test(\"Status code should be 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});",
+									"",
+									"// Verify that response biody contains a paticukar string",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"customerName\");",
+									"});",
+									"",
+									"//Verify that response contains the expected object",
+									"var Object= response;",
+									"console.log(Object);",
+									"pm.test(\"Object is contained\", () => {",
+									"  const expectedObject = {",
+									"  \"customerName\": Object.customerName,",
+									"  \"quantity\": Object.quantity,",
+									"  \"bookId\": Object.bookId,",
+									"  \"id\" : Object.id",
+									"};",
+									"  pm.expect(pm.response.json()).to.deep.include(expectedObject);",
+									"});",
+									"",
+									"// Verify that the order gotten is for the specified  order",
+									" var jsonData = pm.response.json();",
+									" console.log(jsonData);",
+									" console.log(jsonData.id);",
+									" var environmentOrderId = pm.environment.get(\"orderId\");",
+									" console.log(environmentOrderId)",
+									"",
+									"pm.test(\"Response property for orderId matches environment variable orderId\", function () {",
+									"  pm.expect(jsonData.id).to.eql(pm.environment.get(\"orderId\"));",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Bola\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/orders/:orderId",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "with invalid order ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"// Verify the status code message",
+									"pm.test(\"Status code name has OK string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"// Verify the status code",
+									"pm.test(\"Status code should be 200\", () => {",
+									"  pm.expect(pm.response.code).to.eql(200);",
+									"});",
+									"",
+									"// Verify that response biody contains a paticukar string",
+									"pm.test(\"Respons Body should contain string\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"customerName\");",
+									"});",
+									"",
+									"//Verify that response contains the expected object",
+									"var Object= response;",
+									"console.log(Object);",
+									"pm.test(\"Object is contained\", () => {",
+									"  const expectedObject = {",
+									"  \"customerName\": Object.customerName,",
+									"  \"quantity\": Object.quantity,",
+									"  \"bookId\": Object.bookId,",
+									"  \"id\" : Object.id",
+									"};",
+									"  pm.expect(pm.response.json()).to.deep.include(expectedObject);",
+									"});",
+									"",
+									"// Verify that the order gotten is for the specified  order",
+									" var jsonData = pm.response.json();",
+									" console.log(jsonData);",
+									" console.log(jsonData.id);",
+									" var environmentOrderId = pm.environment.get(\"orderId\");",
+									" console.log(environmentOrderId)",
+									"",
+									"pm.test(\"Response property for orderId matches environment variable orderId\", function () {",
+									"  pm.expect(jsonData.id).to.eql(pm.environment.get(\"orderId\"));",
+									"});",
+									"",
+									"pm.test(\"Check the active environment is Team-Postman\", () => {",
+									"  pm.expect(pm.environment.name).to.eql(\"Team-Postman\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Bola\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/orders/:orderId",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete An Order",
+			"item": [
+				{
+					"name": "Delete an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code should be 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string OK\", function () {\r",
+									"    pm.response.to.have.status(\"No Content\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"   "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurlsimplebooks}}/orders/:orderId",
+							"host": [
+								"{{baseurlsimplebooks}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
